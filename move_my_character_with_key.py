@@ -9,10 +9,6 @@ tuk_ground = load_image('TUK_GROUND.png')
 # character = load_image('animation_sheet.png')
 character = load_image('TEST1.png')
 
-# def mode_check(value,result):
-#     if moving == 0:
-#         result = value
-
 def handle_events():
     global running
     global moving
@@ -27,19 +23,23 @@ def handle_events():
                 dir_x += 1
                 # value = 1
                 # mode_check(value,rear)
-                rear = 1
+                if moving == 0:
+                    rear = 1
                 moving += 1
             elif event.key == SDLK_LEFT:
                 dir_x -= 1
-                rear = 2
+                if moving == 0:
+                    rear = 2
                 moving += 1
             elif event.key == SDLK_UP:
                 dir_y += 1
-                rear = 0
+                if moving == 0:
+                    rear = 0
                 moving += 1
             elif event.key == SDLK_DOWN:
                 dir_y -= 1
-                rear = 3
+                if moving == 0:
+                    rear = 3
                 moving += 1
 
             elif event.key == SDLK_ESCAPE:
