@@ -21,8 +21,6 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
                 dir_x += 1
-                # value = 1
-                # mode_check(value,rear)
                 if moving == 0:
                     rear = 1
                 moving += 1
@@ -67,6 +65,8 @@ x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 dir_x, dir_y = 0, 0
 moving = 0
 rear = 3
+idle = 0
+idle_up = True
 
 while running:
     clear_canvas()
@@ -74,7 +74,7 @@ while running:
     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
 
     if moving == 0:
-        character.clip_draw(0, rear * 64, 64, 64, x, y, SIZE, SIZE)
+        character.clip_draw(0, rear * 64, 64, 64, x, y + idle, SIZE, SIZE)
     else:
         character.clip_draw(frame * 64, rear * 64, 64, 64, x, y, SIZE, SIZE)
 
@@ -82,7 +82,17 @@ while running:
 
     handle_events()
 
-    if moving != 0:
+
+    if moving == 0:
+        if idle_up:
+            idle += 1
+            if idle >= 4:
+                idle_up = False
+        else:
+            idle -= 1
+            if idle == 0:
+                idle_up = True
+    else:
         frame = (frame + 1) % 4
         x += dir_x * 5
         y += dir_y * 5
@@ -94,10 +104,6 @@ while running:
             y = 0 + 25
         elif y > TUK_HEIGHT - 25:
             y = TUK_HEIGHT - 25
-    delay(0.01)
+    delay(0.02)
 
 close_canvas()
-
-
-
-
