@@ -6,8 +6,8 @@ from pico2d import *
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 tuk_ground = load_image('TUK_GROUND.png')
-character = load_image('animation_sheet.png')
-
+# character = load_image('animation_sheet.png')
+character = load_image('TEST1.png')
 
 def handle_events():
     global running
@@ -49,15 +49,15 @@ while running:
     clear_canvas()
 
     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
-
+    # character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    character.clip_draw(frame * 64, 0, 64, 64, x, y)
     update_canvas()
     handle_events()
     if dir != 0:
-        frame = (frame + 1) % 8
+        frame = (frame + 1) % 4
         x += dir_x * 5
         y += dir_y * 5
-    delay(0.05)
+    delay(0.1)
 
 close_canvas()
 
