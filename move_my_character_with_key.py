@@ -10,6 +10,10 @@ tuk_ground = load_image('TUK_GROUND.png')
 # character = load_image('animation_sheet.png')
 character = load_image('TEST1.png')
 
+# def mode_check(value,result):
+#     if moving == 0:
+#         result = value
+
 def handle_events():
     global running
     global moving
@@ -22,6 +26,8 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
                 dir_x += 1
+                # value = 1
+                # mode_check(value,rear)
                 rear = 1
                 moving += 1
             elif event.key == SDLK_LEFT:
@@ -72,11 +78,7 @@ while running:
         character.clip_draw(0, rear * 64, 64, 64, x, y, SIZE, SIZE)
     else:
         character.clip_draw(frame * 64, rear * 64, 64, 64, x, y, SIZE, SIZE)
-    # character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
-    # if move_mode == 0:
-    #     character.clip_draw(0, rear*64, 64, 64, x, y,SIZE,SIZE)
-    # else:
-    #     character.clip_draw(frame * 64, 0, SIZE, SIZE, x, y,SIZE,SIZE)
+
     update_canvas()
     handle_events()
 
