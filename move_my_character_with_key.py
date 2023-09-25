@@ -1,6 +1,5 @@
 from pico2d import *
 
-
 # fill here
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
@@ -80,13 +79,22 @@ while running:
         character.clip_draw(frame * 64, rear * 64, 64, 64, x, y, SIZE, SIZE)
 
     update_canvas()
+
     handle_events()
 
-    if dir != 0:
+    if moving != 0:
         frame = (frame + 1) % 4
         x += dir_x * 5
         y += dir_y * 5
-    delay(0.05)
+        if x < 0 + 25:
+            x = 0 + 25
+        elif x > TUK_WIDTH - 25:
+            x = TUK_WIDTH - 25
+        if y < 0 + 25:
+            y = 0 + 25
+        elif y > TUK_HEIGHT - 25:
+            y = TUK_HEIGHT - 25
+    delay(0.01)
 
 close_canvas()
 
