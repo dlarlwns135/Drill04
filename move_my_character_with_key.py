@@ -1,13 +1,17 @@
 from pico2d import *
 
-# fill here
-
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
-SIZE = 100
+SIZE = 130
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 tuk_ground = load_image('TUK_GROUND.png')
-# character = load_image('animation_sheet.png')
 character = load_image('TEST1.png')
+
+def rear_func(x):
+    global moving, rear, last_key
+    if moving == 0:
+        rear = x
+    else:
+        last_key = x
 
 def handle_events():
     global running
@@ -22,31 +26,19 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
                 dir_x += 1
-                if moving == 0:
-                    rear = 1
-                else:
-                    last_key = 1
+                rear_func(1)
                 moving += 1
             elif event.key == SDLK_LEFT:
                 dir_x -= 1
-                if moving == 0:
-                    rear = 2
-                else:
-                    last_key = 2
+                rear_func(2)
                 moving += 1
             elif event.key == SDLK_UP:
                 dir_y += 1
-                if moving == 0:
-                    rear = 0
-                else:
-                    last_key = 0
+                rear_func(0)
                 moving += 1
             elif event.key == SDLK_DOWN:
                 dir_y -= 1
-                if moving == 0:
-                    rear = 3
-                else:
-                    last_key = 3
+                rear_func(3)
                 moving += 1
 
             elif event.key == SDLK_ESCAPE:
@@ -117,16 +109,16 @@ while running:
                 idle_up = True
     else:
         frame = (frame + 1) % 4
-        x += dir_x * 5
-        y += dir_y * 5
-        if x < 0 + 25:
-            x = 0 + 25
-        elif x > TUK_WIDTH - 25:
-            x = TUK_WIDTH - 25
-        if y < 0 + 25:
-            y = 0 + 25
-        elif y > TUK_HEIGHT - 25:
-            y = TUK_HEIGHT - 25
-    delay(0.02)
+        x += dir_x * 10
+        y += dir_y * 10
+        if x < 0 + SIZE/4:
+            x = 0 + SIZE/4
+        elif x > TUK_WIDTH - SIZE/4:
+            x = TUK_WIDTH - SIZE/4
+        if y < 0 + SIZE/4:
+            y = 0 + SIZE/4
+        elif y > TUK_HEIGHT - SIZE/4:
+            y = TUK_HEIGHT - SIZE/4
+    delay(0.04)
 
 close_canvas()
