@@ -13,6 +13,7 @@ def handle_events():
     global running
     global moving
     global dir_x, dir_y, rear
+    global last_key
 
     events = get_events()
     for event in events:
@@ -23,21 +24,29 @@ def handle_events():
                 dir_x += 1
                 if moving == 0:
                     rear = 1
+                else:
+                    last_key = 1
                 moving += 1
             elif event.key == SDLK_LEFT:
                 dir_x -= 1
                 if moving == 0:
                     rear = 2
+                else:
+                    last_key = 2
                 moving += 1
             elif event.key == SDLK_UP:
                 dir_y += 1
                 if moving == 0:
                     rear = 0
+                else:
+                    last_key = 0
                 moving += 1
             elif event.key == SDLK_DOWN:
                 dir_y -= 1
                 if moving == 0:
                     rear = 3
+                else:
+                    last_key = 3
                 moving += 1
 
             elif event.key == SDLK_ESCAPE:
@@ -47,15 +56,28 @@ def handle_events():
             if event.key == SDLK_RIGHT:
                 dir_x -= 1
                 moving -= 1
+                if moving != 0:
+                    if rear == 1:
+                        rear = last_key
             elif event.key == SDLK_LEFT:
                 dir_x += 1
                 moving -= 1
+                if moving != 0:
+                    if rear == 2:
+                        rear = last_key
             elif event.key == SDLK_UP:
                 dir_y -= 1
                 moving -= 1
+                if moving != 0:
+                    if rear == 0:
+                        rear = last_key
             elif event.key == SDLK_DOWN:
                 dir_y += 1
                 moving -= 1
+                if moving != 0:
+                    if rear == 3:
+                        rear = last_key
+
 
 
 
@@ -65,6 +87,7 @@ x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 dir_x, dir_y = 0, 0
 moving = 0
 rear = 3
+last_key = 3
 idle = 0
 idle_up = True
 
