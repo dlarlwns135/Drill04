@@ -11,7 +11,8 @@ tuk_ground = load_image('TUK_GROUND.png')
 character = load_image('TEST1.png')
 
 def handle_events():
-    global running, moving
+    global running
+    global moving
     global dir_x, dir_y, rear
 
     events = get_events()
@@ -22,36 +23,44 @@ def handle_events():
             if event.key == SDLK_RIGHT:
                 dir_x += 1
                 rear = 1
+                moving += 1
             elif event.key == SDLK_LEFT:
                 dir_x -= 1
                 rear = 2
+                moving += 1
             elif event.key == SDLK_UP:
                 dir_y += 1
                 rear = 0
+                moving += 1
             elif event.key == SDLK_DOWN:
                 dir_y -= 1
                 rear = 3
+                moving += 1
 
             elif event.key == SDLK_ESCAPE:
                 running = False
-            moving = True
+
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_RIGHT:
                 dir_x -= 1
+                moving -= 1
             elif event.key == SDLK_LEFT:
                 dir_x += 1
+                moving -= 1
             elif event.key == SDLK_UP:
                 dir_y -= 1
+                moving -= 1
             elif event.key == SDLK_DOWN:
                 dir_y += 1
-            moving = False
+                moving -= 1
+
 
 
 running = True
 frame = 0
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 dir_x, dir_y = 0, 0
-moving = False
+moving = 0
 rear = 3
 
 while running:
@@ -59,7 +68,7 @@ while running:
 
     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
 
-    if moving == False:
+    if moving == 0:
         character.clip_draw(0, rear * 64, 64, 64, x, y, SIZE, SIZE)
     else:
         character.clip_draw(frame * 64, rear * 64, 64, 64, x, y, SIZE, SIZE)
